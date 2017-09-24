@@ -1,0 +1,91 @@
+---
+title: "ANLY 512 - Problem Set 3"
+subtitle: "Exploring the Grammar of Graphics"
+author: "Xiaowei Wan"
+date: "9/24/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objectives
+
+The objectives of this problem set is to gain experience working with the ggplot2 package for data visualization. To do this I have provided a series of graphics, all created using the ggplot2 package. Your objective for this assignment will be write the code necessary to exactly recreate the provided graphics.
+
+When completed submit a link to your file on rpubs.com. Be sure to include echo = TRUE for each graphic so that I can see the visualization and the code required to create it.
+
+```{r load libraries, message=FALSE, warning=FALSE}
+# load packages ggplot2, ggthemes
+library(ggplot2)
+library(ggthemes)
+```
+
+## Vis 1
+
+This graphic is a traditional stacked bar chart. This graphic works on the mpg dataset, which is built into the ggplot2 library. This means that you can access it simply by ggplot(mpg, ....). There is one modification above default in this graphic, I renamed the legend for more clarity.
+
+```{r ggplot mpg}
+ggplot(data = mpg, aes(x = class, fill = trans)) + 
+  geom_bar() + 
+  scale_fill_discrete(name = 'Transmission')
+```
+
+## Vis 2
+
+This boxplot is also built using the mpg dataset. Notice the changes in axis labels, and an altered theme_XXXX
+
+```{r boxplot}
+# ggplot mpg dataset
+ggplot(data = mpg, aes(x = manufacturer, y = hwy)) + 
+  geom_boxplot() + 
+  coord_flip() + 
+  xlab('Vehicle Manufacturer') + 
+  ylab('Highway Fuel Efficiency (miles/gallon)') + 
+  theme_classic()
+```
+
+
+## Vis 3
+
+This graphic is built with another dataset diamonds a dataset also built into the ggplot2 package. For this one I used an additional package called library(ggthemes) check it out to reproduce this view.
+
+```{r ggthemes}
+# ggplot of diamonds dataset
+ggplot(data = diamonds, aes(x = price, fill = cut, color = cut)) + 
+  geom_density(alpha = 0.3) + 
+  ggtitle('Diamond Price Density') +
+  xlab('Diamond Price (USD)') + 
+  ylab('Density') + 
+  theme_economist()
+```
+
+## Vis 4
+
+For this plot we are changing vis idioms to a scatter plot framework. Additionally, I am using ggplot2 package to fit a linear model to the data all within the plot framework. Three are edited labels and theme modifications as well.
+
+```{r scatter plot}
+# Scatter plot of iris dataset
+ggplot(data = iris, aes(x = Sepal.Length, y = Petal.Length)) + 
+  geom_point() + 
+  geom_smooth(method = 'lm') + 
+  ggtitle('Relationship between Petal and Sepal Length') + 
+  xlab('iris Sepal Length') + 
+  ylab('iris Petal Length')
+```
+
+## Vis 5
+
+Finally, in this vis I extend on the last example, by plotting the same data but using an additional channel to communicate species level differences. Again I fit a linear model to the data but this time one for each species, and add additional theme and labeling modicitations.
+
+```{r plot linear model}
+# plot and linear model of iris dataset
+ggplot(data = iris, aes(x = Sepal.Length, y = Petal.Length, col = Species)) + 
+  geom_point() + 
+  geom_smooth(method = 'lm', se = FALSE) + 
+  ggtitle('Relationship between Petal and Sepal Length', subtitle = 'Species level comparison') + 
+  xlab('iris Sepal Length') + 
+  ylab('iris Petal Length') +
+  theme_tufte()
+```
