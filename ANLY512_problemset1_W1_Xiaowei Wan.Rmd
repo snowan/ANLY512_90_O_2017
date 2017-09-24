@@ -1,0 +1,73 @@
+---
+title: "ANLY 512 Problem Set1"
+author: "Xiaowei Wan"
+date: "9/10/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Questions
+
+Find the mtcars data in R. This is the dataset that you will use to create your graphics. Use the dataset to draw graphics.
+
+```{r mtcars}
+data("mtcars")
+summary(mtcars)
+
+# import ggplot2 library
+library(ggplot2)
+```
+
+* Create a pie chart showing the proportion of cars from the mtcars data set that have different carb values.
+```{r ggplot2 draw pie chart}
+# proportions of cars by 'carb' value
+ggplot(data = mtcars, aes(x = factor(1), fill = factor(carb))) + 
+      ylab("Proportions of cars by 'carb' value") + 
+      xlab("") + 
+      geom_bar(width = 1) + 
+      coord_polar(theta = "y")
+```
+
+Observed from pie chart, it shows that cars with two and four carburetors have the highest proportion of 31.25%. Cars with one carburetor has proportion of 21.88%, cars with three carburetors has proportion of 9.37% and cars with six and eight carburetors have the smallest proportion of 3.12%.
+
+* Create a bar graph, that shows the number of each gear type in mtcars.
+
+```{r ggplot2 create a bar graph}
+# show the gear type in mtcars
+ggplot(data = mtcars, aes(x = gear)) + geom_bar(stat = "count")
+```
+
+Observed from bar chart by gear type, it shows that 15 cars have three gears, 12 cars have four gears and 5 cars have five gears.
+
+* Next show a stacked bar graph of the number of each gear type and how they are further divided out by cyl.
+
+```{r bar graph, gear type, cyl}
+# show a stacked bar graph of the number of each gear type and divided out by cyl.
+ggplot(mtcars, aes(x = factor(cyl), fill = factor(gear))) + 
+    xlab("Values of 'cyl'") + 
+    ylab("Values of 'count of gear'") + 
+    geom_bar(color = "black")
+```
+
+Observed from the stached bar graph, it shows that for four cylinder cars, only 1 car has three gears, 8 cars have four gears and 2 cars have five gears; For six cyliner cars, 2 cars have three gears, 4 cars have four gears and 1 car has five years; For 8 cylinder cars, 12 cars have three gears, 2 cars have five gears and no car has four gears.
+
+* Draw a scatter plot showing the relationship between wt and mpg.
+
+```{r scatter plot, wt and mpg}
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+    xlab("wt") + 
+    ylab("mpg") +
+    geom_point() +
+    geom_line() +
+    ggtitle("Relationship between 'wt' and 'mpg'") +
+    stat_smooth(method = "loess", formula = y ~ x, size = 1, col = "red")
+```
+
+Observed from scatter plot, it shows that it is a negative relationship between weight and mpg. As weight increase, miles per gallon decreases.
+
+* Design a visualization of your choice using the data and write a brief summary about why you chose that visualization.
+
+I chose ggplot for the data visualization for this problem set, because the graphics are widely used to draw graphs and it is easy to use to plot a different graph, it has higher aesthetic values.

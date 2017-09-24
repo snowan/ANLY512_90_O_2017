@@ -1,0 +1,155 @@
+---
+title: "ANLY 512 - Problem Set 2"
+subtitle: "Anscombe's quartet"
+author: "Xiaowei Wan"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Objectives
+
+The objectives of this problem set is to orient you to a number of activities in `R`.  And to conduct a thoughtful exercise in appreciating the importance of data visualization.  For each question create a code chunk or text response that completes/answers the activity or question requested. Finally, upon completion name your final output `.html` file as: `YourName_ANLY512-Section-Year-Semester.html` and upload it to the "Problem Set 2" assignmenet on Moodle.
+
+
+
+## Questions
+
+1. Anscombes quartet is a set of 4 $x,y$ data sets that were published by *Francis Anscombe* in a 1973 paper [*Graphs in statistical analysis*](https://www.jstor.org/stable/2682899?seq=1#page_scan_tab_contents).  For this first question load the `anscombe` data that is part of the `library(datasets)` in `R`.  And assign that data to a new object called `data`.
+
+```{r load dataset}
+data <- anscombe
+```
+
+2. Summarise the data by calculating the mean, variance, for each column and the correlation between each pair (eg. x1 and y1, x2 and y2, etc) (Hint: use the `fBasics()` package!)
+
+```{r summarise anscombe data, warning=FALSE, message=FALSE}
+# assign variables x1, x2, x3, x4, y1, y2, y3, y4
+x1 <- data$x1
+x2 <- data$x2
+x3 <- data$x3
+x4 <- data$x4
+y1 <- data$y1
+y2 <- data$y2
+y3 <- data$y3
+y4 <- data$y4
+# mean and variance of x1
+mean(x1)
+var(x1)
+# mean and variance of x2
+mean(x2)
+var(x2)
+# mean and variance of x3
+mean(x3)
+var(x3)
+# mean and variance of x4
+mean(x4)
+var(x4)
+
+# mean and variance of y1
+mean(y1)
+var(y1)
+# mean and variance of y2
+mean(y2)
+var(y2)
+# mean and variance of y3
+mean(y3)
+var(y3)
+# mean and variance of y4
+mean(y4)
+var(y4)
+
+library("fBasics")
+correlationTest(x1, y1)
+correlationTest(x2, y2)
+correlationTest(x3, y3)
+correlationTest(x4, y4)
+```
+
+3. Create scatter plots for each $x, y$ pair of data.
+```{r scatter data plots}
+plot(x1, y1, main="Scatter plots between x1, y1")
+plot(x2, y2, main="Scatter plots between x2, y2")
+plot(x3, y3, main="Scatter plots between x3, y3")
+plot(x4, y4, main="Scatter plots between x4, y4")
+```
+
+4. Now change the symbols on the scatter plots to solid circles and plot them together as a 4 panel graphic
+
+```{r scatter plots with solid circles}
+par(mfrow=c(2,2))
+plot(x1, y1, main="Scatter plots between x1, y1", pch=16, col="red")
+plot(x2, y2, main="Scatter plots between x2, y2", pch=16, col="blue")
+plot(x3, y3, main="Scatter plots between x3, y3", pch=16, col="green")
+plot(x4, y4, main="Scatter plots between x4, y4", pch=16, col="black")
+```
+
+5. Now fit a linear model to each data set using the `lm()` function.
+```{r, anscombe linear model}
+# linear model between x1 ~ y1
+lm_1 <- lm(y1 ~ x1)
+summary(lm_1)
+# linear model between x2 ~ y2
+lm_2 <- lm(y2 ~ x2)
+summary(lm_2)
+# linear model between x3 ~ y3
+lm_3 <- lm(y3 ~ x3)
+summary(lm_3)
+# linear model between x4 ~ y4
+lm_4 <- lm(y4 ~ x4)
+summary(lm_4)
+```
+
+6. Now combine the last two tasks.  Create a four panel scatter plot matrix that has both the data points and the regression lines. (hint: the model objects will carry over chunks!)
+```{r, scatter plots and regression lines}
+par(mfrow= c(2,2))
+
+plot(x1, y1, main = "Scatter Plot between x1,y1", pch = 20, col="red")
+abline(lm_1, col = "blue")
+
+plot(x2, y2, main = "Scatter Plot between  x2,y2", pch = 20, col="red")
+abline(lm_2, col = "blue")
+
+plot(x3, y3, main = "Scatter Plot between  x3,y3", pch = 20, col="red")
+abline(lm_3, col = "blue")
+
+plot(x4, y4, main = "Scatter Plot between  x4,y4", pch = 20, col="red")
+abline(lm_4, col = "blue")
+```
+
+
+7.  Now compare the model fits for each model object.
+```{r, results="asis"}
+anova(lm_1)
+anova(lm_2)
+anova(lm_3)
+anova(lm_4)
+```
+
+
+8. In text, summarize the lesson of Anscombe's Quartet and what it says about the value of data visualization.
+
+Summarize:
+
+- Anscombe’s Quartet consists of four data set of similar kind of data. 
+- Each data set consists of eleven pairs of values for x and y. 
+- The summary statistics are almost similar for each column values and correlations.
+- The four data set appear to be identical.
+- Plots tells that each data has different story.
+
+Concludes:
+
+* Summary statistics may not tell us all stories about the data.
+* Graphical representation or visualization of data can give us a more clear picture about data.
+* Data visualization in form of graphical datasets is important.
+
+
+
+
+
+
+
